@@ -1,3 +1,35 @@
 class Aqua{
+  float pH; //healthy is 8.0 - 8.4
+  int fishPop;
+  int plantPop;
+  int liva; //0 - 10 livability, everything dies at 0
+
+  Aqua(){
+    this(10, 3);
+  } 
+  Aqua(int fPop, int pPop){
+    //create the screen
+    createS();
+    //set Ph and initial fish and plant population
+    pH = 8.0;
+    fishPop = fPop;
+    for (int i = 0; i < fPop; i++){
+      addFish();
+    }
+    plantPop = pPop; 
+    for (int i = 0; i < pPop; i++){
+      growPlant();
+    }
+  }
+  addFish(){
+    int xCoor = 
+    int yCoor = 
+    Fish x = new Fish(
+  }
+  
+  createS(){
+   size(1000, 800);
+   background()
+  }
   
 }
