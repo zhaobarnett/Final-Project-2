@@ -1,15 +1,16 @@
-class Aqua{
+import java.util.*;
+import java.lang.*;
+
+class Aquas{
   float pH; //healthy is 8.0 - 8.4
   int fishPop;
   int plantPop;
   int liva; //0 - 10 livability, everything dies at 0
 
-  Aqua(){
+  Aquas(){
     this(10, 3);
   } 
-  Aqua(int fPop, int pPop){
-    //create the screen
-    createS();
+  Aquas(int fPop, int pPop){
     //set Ph and initial fish and plant population
     pH = 8.0;
     fishPop = fPop;
@@ -21,15 +22,18 @@ class Aqua{
       growPlant();
     }
   }
-  addFish(){
-    int xCoor = 
-    int yCoor = 
-    Fish x = new Fish(
+  
+  void addFish(){
+    int xCoor = (int)(Math.random() * 900);
+    int yCoor = (int)(Math.random() * 700);
+    int si = (int)(Math.random() * 10);
+    Fish x = new Fish(xCoor, yCoor, si);
   }
   
-  createS(){
-   size(1000, 800);
-   background()
+  void growPlant(){
+    int xCoor = (int)(Math.random() * 900);
+    int yCoor = (int)(Math.random() * 700);
+    int si = (int)(Math.random() * 10);
+    Plant x = new Plant(xCoor, yCoor, si);
   }
-  
 }
