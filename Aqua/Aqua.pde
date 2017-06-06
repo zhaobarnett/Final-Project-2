@@ -24,9 +24,9 @@ class Aquas{
   }
   
   void addFish(){
-    int xCoor = (int)(Math.random() * 900);
-    int yCoor = (int)(Math.random() * 700);
-    int si = (int)(Math.random() * 10);
+    float xCoor = (float)(Math.random() * 900);
+    float yCoor = (float)(Math.random() * 700);
+    float si = (float)(Math.random() * 10);
     Fish x = new Fish(xCoor, yCoor, si);
   }
   
