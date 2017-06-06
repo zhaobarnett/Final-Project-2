@@ -35,4 +35,4 @@ import java.lang.*;
     int si = (int)(Math.random() * 10);
     Plant x = new Plant(xCoor, yCoor, si);
   }
-}
+
