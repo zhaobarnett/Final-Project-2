@@ -25,25 +25,29 @@
   if (def){
     fishPop = 10;
     for (int i = 0; i < fishPop; i++){
-      addFish();
+       addFish();
     }
   }
   plantPop = 5; 
     for (int i = 0; i < plantPop; i++){
-      growPlant();
+       growPlant();
     }
   }
   
  public void draw(){
    update(mouseX, mouseY);
    background(bg);
-   if (rectOver) {
-     def = true;
+   fill (255); 
+   rect( rectX, rectY, 250, rectSize); 
+   fill(0);
+   text("DEFAULT", 400, rectY + 63);
+   textSize(57);   
+   if (def) {
+      noStroke();
+      noFill();
+      rect( rectX, rectY, 250, rectSize);
+      background(bg);
    }
-  fill (255); 
-  rect( rectX, rectY, 250, rectSize); 
-  fill(0);
-  text("DEFAULT", 500, rectY + 53);
  // for(Fish a : lof){
   //  a.display();
    // a.xcoor += 1;
@@ -56,24 +60,12 @@
   }
 }
  void update(int x, int y) {
-   if ( overRect(rectX, rectY, rectSize, rectSize) ) {
+   if ( overRect(rectX, rectY, 250, rectSize) ) {
     rectOver = true;
    }
    else{
      rectOver = false;
    }
- }
- void addFish(){
-    float xCoor = (float)(Math.random() * 900);
-    float yCoor = (float)(Math.random() * 600);
-    float si = (float)(Math.random() * 10);
-    Fish x = new Fish(xCoor, yCoor, si);
-  }
- void growPlant(){
-    int xCoor = (int)(Math.random() * 900);
-    int yCoor = (int)(Math.random() * 600);
-    int si = (int)(Math.random() * 10);
-    Plant x = new Plant(xCoor, yCoor, si);
  }
  boolean overRect(int x, int y, int width, int height)  {
   if (mouseX >= x && mouseX <= x+width && 
@@ -82,5 +74,17 @@
   } else {
     return false;
   }
-}
- 
+ }
+   void addFish(){
+    float xCoor = (float)(Math.random() * 900);
+    float yCoor = (float)(Math.random() * 600);
+    float si = (float)(Math.random() * 10);
+    Fish x = new Fish(xCoor, yCoor, si);
+    x.draw();
+  }
+ void growPlant(){
+    int xCoor = (int)(Math.random() * 900);
+    int yCoor = (int)(Math.random() * 600);
+    int si = (int)(Math.random() * 10);
+    Plant x = new Plant(xCoor, yCoor, si);
+ } 
