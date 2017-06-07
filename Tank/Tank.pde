@@ -1,20 +1,28 @@
 ArrayList<Fish> lof;
 Aqua ium;
+float screenW = 1000;
+float screenH = 800;
   
   public void setup(){
     size(1000, 800);
-    background(255);
+    //background(0,0,100);
     ium = new Aqua();
     lof = new ArrayList<Fish>();
     lof.add(new Fish(10, 10, 10));
   }
   
   public void draw(){
-  background(200);
+  background(0,100,200);
   for(Fish a : lof){
-    a.display();
     a.xcoor += 1;
     a.ycoor += random(5.5) - 2.75;
+    if(a.xcoor > screenH){
+      a.xcoor = 0;
+    }
+    if(a.ycoor > screenW){
+      a.ycoor = 0;
+    }
+    a.display();
     } 
   }
   
@@ -25,8 +33,8 @@ Aqua ium;
       lof.add(newFish);
     }
   }
-  while (s>0) {
-    lof.remove(0);
-    s--;
-  }
+//  while (s>0) {
+  //  lof.remove(0);
+    //s--;
+  //}
 }

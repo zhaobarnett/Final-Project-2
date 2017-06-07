@@ -18,7 +18,7 @@ class Fish{
     ArrayList<Fish> retVal = new ArrayList<Fish>();
     float xCoor = (float)(Math.random() * 900);
     float yCoor = (float)(Math.random() * 700);
-    float si = (float)(Math.random() * 10);
+    float si = (float)(Math.random() * 50);
     Fish x = new Fish(xCoor, yCoor, si);
     retVal.add(x);
     return retVal;
@@ -27,8 +27,9 @@ class Fish{
   public void display(){
     stroke(0);
     fill(255);
-    ellipse(xcoor, ycoor, size, size);
-    triangle(xcoor, ycoor, xcoor+1, ycoor+1, xcoor-1, ycoor-1);
+    ellipse(xcoor, ycoor, size*1.5, size);
+    ellipse(xcoor+size*.5, ycoor-size*.15, size*.1, size*.1);
+    triangle(xcoor-size, ycoor+size*.4, xcoor-size*.7, ycoor, xcoor-size, ycoor-size*.4);
   }
   
 }
