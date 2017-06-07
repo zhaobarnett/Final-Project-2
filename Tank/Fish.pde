@@ -14,6 +14,16 @@ class Fish{
     this.size = size;
   }
   
+  ArrayList<Fish> addFish(){
+    ArrayList<Fish> retVal = new ArrayList<Fish>();
+    float xCoor = (float)(Math.random() * 900);
+    float yCoor = (float)(Math.random() * 700);
+    float si = (float)(Math.random() * 10);
+    Fish x = new Fish(xCoor, yCoor, si);
+    retVal.add(x);
+    return retVal;
+  }
+  
   public void display(){
     stroke(0);
     fill(255);
