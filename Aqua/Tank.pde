@@ -1,11 +1,11 @@
-ArrayList<Fish> lof;
-Aqua ium;
+class Tank{
+
+  ArrayList<Fish> lof;
   
   public void setup(){
     size(1000, 800);
     background(255);
-    ium = new Aqua();
-    ium.addFish();
+    ium = new Aquas();
   }
   
   public void draw(){
@@ -16,3 +16,6 @@ Aqua ium;
     a.ycoor += random(5.5) - 2.75;
     } 
   }
+  
+  
+}
