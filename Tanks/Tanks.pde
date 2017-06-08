@@ -1,7 +1,7 @@
 ArrayList<Fish> lof;
 Aqua ium;
-float screenW = 1000;
-float screenH = 800;
+//float screenW = 1000;
+//float screenH = 800;
   
   public void setup(){
     size(1000, 800);
