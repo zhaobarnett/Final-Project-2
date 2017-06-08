@@ -15,15 +15,18 @@ float screenH = 800;
   background(0,100,200);
   for(Fish a : lof){
     a.xcoor += 1;
-    a.ycoor += random(5.5) - 2.75;
+    a.ycoor += random(2.25) - 1.375;
     if(a.xcoor > screenH){
       a.xcoor = 0;
     }
-    if(a.ycoor > screenW){
+    if(a.ycoor < 0){
       a.ycoor = 0;
     }
     a.display();
-    } 
+    }
+    if(ium.pH < 8 || ium.pH > 8.4){
+      lof.remove(random(lof.size()));
+    }
   }
   
   void mousePressed() {

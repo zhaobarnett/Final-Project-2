@@ -9,12 +9,12 @@ class Aqua{
 
 
   Aqua(){
-    this(10, 3);
+    this(8, 10, 3);
   } 
   
-  Aqua(int fPop, int pPop){
+  Aqua(float pH, int fPop, int pPop){
     //set Ph and initial fish and plant population
-    pH = 8.0;
+    pH = 6;
     fishPop = fPop;
     //for (int i = 0; i < fPop; i++){
     //  addFish();
