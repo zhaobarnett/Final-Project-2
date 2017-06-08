@@ -15,12 +15,15 @@ float screenH = 800;
   background(0,100,200);
   for(Fish a : lof){
     a.xcoor += 1;
-    a.ycoor += random(2.25) - 1.375;
-    if(a.xcoor > screenH){
+    a.ycoor += Math.random() - .5 ;
+    if(a.xcoor > 1000){
       a.xcoor = 0;
     }
     if(a.ycoor < 0){
       a.ycoor = 0;
+    }
+    if(a.ycoor > 800){
+      a.ycoor = 800;
     }
     a.display();
     }
@@ -31,13 +34,5 @@ float screenH = 800;
   
   void mousePressed() {
   int s = lof.size();
-  for ( Fish next : lof.toArray(new Fish[0])) {
-    for (Fish newFish : next.addFish()) {
-      lof.add(newFish);
-    }
+  lof.add(new Fish(mouseX, mouseY, (float)(Math.random() * 50)));
   }
-//  while (s>0) {
-  //  lof.remove(0);
-    //s--;
-  //}
-}
