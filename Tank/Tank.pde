@@ -1,4 +1,4 @@
-  //Thanks to button class in processing's library!!!
+   //Thanks to button class in processing's library!!!
   int rectX, rectY;      // Position of square button
   int rectSize = 90;     // Diameter of rect
   color rectColor;
@@ -21,17 +21,8 @@
   rectHighlight = color(51);
   rectX = width/2-rectSize-10;
   rectY = height/2-rectSize/2;
+  lof = new ArrayList<Fish>();
   pH = 8.0;
-  if (def){
-    fishPop = 10;
-    for (int i = 0; i < fishPop; i++){
-       addFish();
-    }
-  }
-  plantPop = 5; 
-    for (int i = 0; i < plantPop; i++){
-       growPlant();
-    }
   }
   
  public void draw(){
@@ -48,6 +39,23 @@
       rect( rectX, rectY, 250, rectSize);
       background(bg);
    }
+   for(Fish a : lof){
+    a.xcoor += Math.random() * 2;
+    a.ycoor += Math.random() - .5 ;
+    if(a.xcoor > 1000){
+      a.xcoor = 0;
+    }
+    if(a.ycoor < 0){
+      a.ycoor = 0;
+    }
+    if(a.ycoor > 800){
+      a.ycoor = 800;
+    }
+    a.display();
+    }
+    if(pH < 8 || pH > 8.4){
+      lof.remove(random(lof.size()));
+  }
  // for(Fish a : lof){
   //  a.display();
    // a.xcoor += 1;
@@ -57,6 +65,11 @@
  void mousePressed() {
   if (rectOver) {
     def = true;
+    addFish();
+  }
+  else{
+   int s = lof.size();
+  lof.add(new Fish(mouseX, mouseY, (float)(Math.random() * 50)));
   }
 }
  void update(int x, int y) {
@@ -76,16 +89,21 @@
   }
  }
    void addFish(){
-    float xCoor = (float)(Math.random() * 900);
-    float yCoor = (float)(Math.random() * 600);
-    float si = (float)(Math.random() * 10);
-    Fish x = new Fish(xCoor, yCoor, si);
-    x.draw();
+    fishPop = 15;
+    lof.add(new Fish(500, 500, 100));
+    lof.add(new Fish(150, 300, 15));
+    lof.add(new Fish(100, 10, 10));
+    lof.add(new Fish(20, 40, 40));
+    lof.add(new Fish(600, 400, 15));
+    lof.add(new Fish(600, 600, 5));
+    lof.add(new Fish(800, 500, 15));
+    lof.add(new Fish(100, 160, 30));
+    lof.add(new Fish(260, 640, 20));
+    lof.add(new Fish(120, 406, 5));
+    lof.add(new Fish(900, 200, 15));
+    lof.add(new Fish(890, 500, 25));
+    lof.add(new Fish(900, 460, 20));
+    lof.add(new Fish(60, 340, 7));
+    lof.add(new Fish(920, 106, 15));
   }
- void growPlant(){
-    int xCoor = (int)(Math.random() * 900);
-    int yCoor = (int)(Math.random() * 600);
-    int si = (int)(Math.random() * 10);
-    Plant x = new Plant(xCoor, yCoor, si);
- } 
- 
+
