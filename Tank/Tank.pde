@@ -106,4 +106,3 @@
     lof.add(new Fish(60, 340, 7));
     lof.add(new Fish(920, 106, 15));
   }
-
