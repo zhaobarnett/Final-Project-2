@@ -15,23 +15,24 @@
   PImage bg;
   
   public void setup(){
-  size(1000, 625);
-  bg = loadImage("ocean.jpg"); 
-  rectColor = color(0);
-  rectHighlight = color(51);
-  rectX = width/2-rectSize-10;
-  rectY = height/2-rectSize/2;
-  pH = 8.0;
-  if (def){
-    fishPop = 10;
-    for (int i = 0; i < fishPop; i++){
-       addFish();
+    size(1000, 625);
+    lof = new ArrayList<Fish>();
+    bg = loadImage("ocean.jpg"); 
+    rectColor = color(0);
+    rectHighlight = color(51);
+    rectX = width/2-rectSize-10;
+    rectY = height/2-rectSize/2;
+    pH = 8.0;
+    if (def){
+      fishPop = 10;
+      for (int i = 0; i < fishPop; i++){
+        addFish();
+      }
     }
-  }
-  plantPop = 5; 
-    for (int i = 0; i < plantPop; i++){
-       growPlant();
-    }
+    plantPop = 5; 
+      for (int i = 0; i < plantPop; i++){
+        growPlant();
+      }
   }
   
  public void draw(){
@@ -48,15 +49,28 @@
       rect( rectX, rectY, 250, rectSize);
       background(bg);
    }
- // for(Fish a : lof){
-  //  a.display();
-   // a.xcoor += 1;
-   // a.ycoor += random(5.5) - 2.75;
-   // } 
+    for(Fish a : lof){
+    a.xcoor += Math.random() * 2;
+    a.ycoor += Math.random() - .5 ;
+    if(a.xcoor > 1000){
+      a.xcoor = 0;
+    }
+    if(a.ycoor < 0){
+      a.ycoor = 0;
+    }
+    if(a.ycoor > 800){
+      a.ycoor = 800;
+    }
+    a.display();
+    }
  }
+ 
  void mousePressed() {
   if (rectOver) {
     def = true;
+  }
+  else{
+      lof.add(new Fish(mouseX, mouseY, (float)(Math.random() * 50)));
   }
 }
  void update(int x, int y) {
@@ -80,7 +94,7 @@
     float yCoor = (float)(Math.random() * 600);
     float si = (float)(Math.random() * 10);
     Fish x = new Fish(xCoor, yCoor, si);
-    x.draw();
+    //x.draw();
   }
  void growPlant(){
     int xCoor = (int)(Math.random() * 900);

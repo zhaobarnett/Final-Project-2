@@ -20,7 +20,7 @@ Aqua ium;
   background(0,100,200);
   for(Fish a : lof){
     a.xcoor += Math.random() * 2;
-    a.ycoor += Math.random() - .5 ;
+    a.ycoor += Math.random() - .5;
     if(a.xcoor > 1000){
       a.xcoor = 0;
     }
