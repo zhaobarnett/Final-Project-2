@@ -107,11 +107,13 @@ import controlP5.*;
  }
  
  void mousePressed() {
+   /*
  if(hasChosen){
         lof.add(new Fish(mouseX, mouseY, 10.0 + (float)(Math.random()*45)));
         fishPop += 1;
      }
-  else if (choseDefault) {
+     */
+  if (choseDefault) {
     option1 = true;
     hasChosen = true;
     for(int i = 0; i < 10; i++){
