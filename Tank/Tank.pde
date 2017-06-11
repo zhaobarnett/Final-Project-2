@@ -1,14 +1,20 @@
+import controlP5.*;
+   
    //Thanks to button class in processing's library!!!
    //buttons
   int defaultX, defaultY;      // Position of square button
   int createX, createY;
   int rectWidth = 250;       // size of the rectangle buttons
   int rectHeight = 90;   
-  boolean hasChosen = false;
+  boolean hasChosen;
   boolean choseDefault;
   boolean choseCreate;
+  boolean infoBox;
   boolean option1;
   boolean option2;
+  //slides and text fields stuff
+  ControlP5 cp5;
+  Slider pHSlider;
   //Aquarium stuff
   float pH; //healthy is 8.0 - 8.4
   int fishPop;
@@ -16,16 +22,22 @@
   int liva; //0 - 10 livability, everything dies at 0
   ArrayList<Fish> lof;
   PImage bg;
+  int counter;
   
   public void setup(){
   size(1000, 625);
   bg = loadImage("ocean.jpg"); 
+  cp5 = new ControlP5(this);
   //coordinates of the rectangle
   defaultX = width/2-rectWidth/2;
   defaultY = height/2-rectHeight-10;
   createX = width/2-rectWidth/2;
   createY = height/2+10;
   lof = new ArrayList<Fish>();
+          pHSlider = new Slider(cp5, "pH levels");
+        pHSlider.setPosition(350.0, 10.0);
+        pHSlider.setMin(6.0);
+        pHSlider.setMax(9.0);
   }
   
  public void draw(){
@@ -50,6 +62,16 @@
         fill(0);
         textSize(15);
         text("Fish Population: " + fishPop, 10, 20);
+        textSize(15);
+        text("pH level: " + pH, 200, 20);
+
+      }
+      if(option2){
+        pHSlider = new Slider(cp5, "pH levels");
+        pHSlider.setPosition(350.0, 10.0);
+        pHSlider.setMin(6.0);
+        pHSlider.setMax(9.0);
+        pH = pHSlider.getValue();
       }
    }
    for(Fish a : lof){
@@ -66,22 +88,36 @@
     }
     a.display();
     }
+    if(hasChosen && option1){
+            pHSlider = new Slider(cp5, "pH levels");
+        pHSlider.setPosition(350.0, 10.0);
+        pHSlider.setMin(6.0);
+        pHSlider.setMax(9.0);
+        pH = pHSlider.getValue();
+            if(counter == 10){
+      addRandomFish();
+      counter = 0;
+    }
+    counter++;
+    }
     if(pH < 8 || pH > 8.4){
       lof.remove(random(lof.size()));
   }
+
  }
  
  void mousePressed() {
-   if(hasChosen){
-      lof.add(new Fish(mouseX, mouseY, 10.0 + (float)(Math.random()*45)));
-      fishPop += 1;
-   }
+ if(hasChosen){
+        lof.add(new Fish(mouseX, mouseY, 10.0 + (float)(Math.random()*45)));
+        fishPop += 1;
+     }
   else if (choseDefault) {
     option1 = true;
     hasChosen = true;
     for(int i = 0; i < 10; i++){
       addRandomFish();
     }
+    pH = 8.0;
   }
   else if(choseCreate){
     option2 = true;
@@ -97,9 +133,13 @@
    else if( overRect(createX, createY, rectWidth, rectHeight) ){
      choseCreate = true;
    }
+   else{
+     choseDefault = false;
+     choseCreate = false;
+   }
  }
  
- //determine if mouseClick is over a particular rectangle
+ //determine if mousePressed is over a particular rectangle
  boolean overRect(int x, int y, int width, int height)  {
   if (mouseX >= x && mouseX <= x+width && 
       mouseY >= y && mouseY <= y+height) {
