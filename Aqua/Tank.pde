@@ -8,6 +8,9 @@ import static javax.swing.JOptionPane.*;
   int createX, createY;
   int rectWidth = 250;       // size of the rectangle buttons
   int rectHeight = 90;   
+  int inputs;
+  int hold;
+  boolean filled;
   boolean hasChosen;
   boolean choseDefault;
   boolean choseCreate;
@@ -15,6 +18,7 @@ import static javax.swing.JOptionPane.*;
   boolean option1;
   boolean option2;
   boolean start;
+ 
   //slides and text fields stuff
   ControlP5 cp5;
   Slider pHSlider;
@@ -69,11 +73,26 @@ import static javax.swing.JOptionPane.*;
         text("pH level: " + pH, 200, 20);
 
       }
+      if (option2 && (!start)){
+        fill (255); 
+        rect(0,0, 1000, 25);
+        fill(0);
+        textSize(15);
+        text("Fish Population: " + hold, 10, 20);
+        textSize(15);
+        text("pH level: " + pH, 200, 20);
+        inputs -= 1;
+        while(inputs > -1){
+           addRandomFish(); 
+           inputs--;
+         }
+      }
       if(option2 && start){
-        int inputs = 0;
+        inputs = 0;
         while(inputs == 0){
           final String id = showInputDialog("Please enter how much fish you want to start off with");          try{
           inputs = Integer.parseInt(id);
+          hold = inputs;
           }
         catch(NumberFormatException e){
           javax.swing.JOptionPane.showMessageDialog(null, "Enter a valid number please");
