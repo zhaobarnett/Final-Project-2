@@ -18,11 +18,13 @@ import controlP5.*;
   //Aquarium stuff
   float pH; //healthy is 8.0 - 8.4
   int fishPop;
-  int plantPop;
-  int liva; //0 - 10 livability, everything dies at 0
+  float temp;
+  float sunlight;
+  int liva = 10; //0 - 10 livability, everything dies at 0
   ArrayList<Fish> lof;
   PImage bg;
-  int counter;
+  int counter = 0;
+  int livaCounter = 0;
   
   public void setup(){
   size(1000, 625);
@@ -89,21 +91,50 @@ import controlP5.*;
     a.display();
     }
     if(hasChosen && option1){
-            pHSlider = new Slider(cp5, "pH levels");
-        pHSlider.setPosition(350.0, 10.0);
-        pHSlider.setMin(6.0);
-        pHSlider.setMax(9.0);
-        pH = pHSlider.getValue();
-            if(counter == 10){
-      addRandomFish();
-      counter = 0;
+      pHSlider = new Slider(cp5, "pH levels");
+      pHSlider.setPosition(350.0, 10.0);
+      pHSlider.setMin(6.0);
+      pHSlider.setMax(9.0);
+      pH = pHSlider.getValue();
+      if(counter == 10){
+        addRandomFish();
+        counter = 0;
+      }
+      counter++;
     }
-    counter++;
+    determineLivability();
+    if(counter == liva){
+      lof.remove((int)(Math.random()*lof.size() - 1));
+      livaCounter = 0;
     }
-    if(pH < 8 || pH > 8.4){
-      lof.remove(random(lof.size()));
-  }
-
+    livaCounter++;
+ }
+ 
+ void determineLivability(){
+   if(fishPop > 100){
+     liva--;
+   }
+   else if(fishPop > 200){
+     liva--;
+   }
+   else if(pH < 7.5 || pH > 8.4){
+     liva--;
+   }
+   else if(pH < 7.0 || pH > 8.9){
+     liva--;
+   }
+   else if(temp < 72 || temp > 80){
+     liva--;
+   }
+   else if(temp < 70 || temp > 88){
+     liva--;
+   }
+   else if(sunlight < 75){
+     liva--;
+   }
+   else if(sunlight < 50){
+     liva--;
+   }
  }
  
  void mousePressed() {
