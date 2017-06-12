@@ -134,7 +134,7 @@ import static javax.swing.JOptionPane.*;
     }
     counter++;
     }
-      determineLivability();
+     determineLivability();
     if(livaCounter == liva){
       if(lof.size() > 0){
       lof.remove(0);
@@ -143,22 +143,23 @@ import static javax.swing.JOptionPane.*;
       livaCounter = 0;
     }
     livaCounter++;
+    liva = 12;
  }
  
  void determineLivability(){
-   if(fishPop > 25){
+   if(fishPop > 20){
      liva--;
    }
-   else if(fishPop > 50){
+   else if(fishPop > 40){
      liva--;
    }
-   else if(fishPop > 75){
+   else if(fishPop > 60){
+     liva--;
+   }
+   else if(fishPop > 80){
      liva--;
    }
    else if(fishPop > 100){
-     liva--;
-   }
-   else if(fishPop > 125){
      liva--;
    }
    else if(pH < 7.5 || pH > 8.4){
@@ -167,6 +168,7 @@ import static javax.swing.JOptionPane.*;
    else if(pH < 7.0 || pH > 8.9){
      liva--;
    }
+   /*
    else if(temp < 72 || temp > 80){
      liva--;
    }
@@ -179,6 +181,7 @@ import static javax.swing.JOptionPane.*;
    else if(sunlight < 50){
      liva--;
    }
+   */
  }
  
  void mousePressed() {
