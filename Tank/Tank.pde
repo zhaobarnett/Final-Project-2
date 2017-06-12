@@ -135,18 +135,30 @@ import static javax.swing.JOptionPane.*;
     counter++;
     }
       determineLivability();
-    if(counter == liva){
-      //lof.remove((int)(Math.random()*lof.size() - 1));
+    if(livaCounter == liva){
+      if(lof.size() > 0){
+      lof.remove(0);
+      fishPop--;
+      }
       livaCounter = 0;
     }
     livaCounter++;
  }
  
  void determineLivability(){
-   if(fishPop > 100){
+   if(fishPop > 25){
      liva--;
    }
-   else if(fishPop > 200){
+   else if(fishPop > 50){
+     liva--;
+   }
+   else if(fishPop > 75){
+     liva--;
+   }
+   else if(fishPop > 100){
+     liva--;
+   }
+   else if(fishPop > 125){
      liva--;
    }
    else if(pH < 7.5 || pH > 8.4){
