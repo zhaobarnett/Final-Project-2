@@ -186,23 +186,3 @@ import static javax.swing.JOptionPane.*;
    fishPop += 1;
    lof.add(new Fish((float)(Math.random()*1000), (float)(Math.random()*625), 10.0 + (float)(Math.random()*45) ));
  }
- 
- //better function
-   void addDefaultFish(){
-    fishPop = 15;
-    lof.add(new Fish(500, 500, 100));
-    lof.add(new Fish(150, 300, 15));
-    lof.add(new Fish(100, 10, 10));
-    lof.add(new Fish(20, 40, 40));
-    lof.add(new Fish(600, 400, 15));
-    lof.add(new Fish(600, 600, 5));
-    lof.add(new Fish(800, 500, 15));
-    lof.add(new Fish(100, 160, 30));
-    lof.add(new Fish(260, 640, 20));
-    lof.add(new Fish(120, 406, 5));
-    lof.add(new Fish(900, 200, 15));
-    lof.add(new Fish(890, 500, 25));
-    lof.add(new Fish(900, 460, 20));
-    lof.add(new Fish(60, 340, 7));
-    lof.add(new Fish(920, 106, 50));
-  }
