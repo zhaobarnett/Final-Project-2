@@ -168,10 +168,11 @@ import static javax.swing.JOptionPane.*;
      liva--;
    }
    else if(fishPop > 80){
-     liva--;
+     if(lof.size() > 0){
+      lof.remove(0);
+      fishPop--;
+      hold--;
    }
-   else if(fishPop > 100){
-     liva--;
    }
    else if(pH < 7.5 || pH > 8.4){
      liva--;
@@ -183,7 +184,20 @@ import static javax.swing.JOptionPane.*;
      liva--;
    }
    else if(pH < 3.0){
-     liva--;
+     if(lof.size() > 0){
+      lof.remove(0);
+      fishPop--;
+      hold--;
+      lof.remove(0);
+      fishPop--;
+      hold--;
+      lof.remove(0);
+      fishPop--;
+      hold--;
+      lof.remove(0);
+      fishPop--;
+      hold--;
+   }
    }
    /*
    else if(temp < 72 || temp > 80){
