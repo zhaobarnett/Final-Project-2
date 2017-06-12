@@ -148,6 +148,7 @@ import static javax.swing.JOptionPane.*;
       if(lof.size() > 0){
       lof.remove(0);
       fishPop--;
+      hold--;
       }
       livaCounter = 0;
     }
