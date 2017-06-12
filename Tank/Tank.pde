@@ -6,14 +6,10 @@ import static javax.swing.JOptionPane.*;
    //buttons
   int defaultX, defaultY;      // Position of square button
   int createX, createY;
-  int pHX, pHY;
   int rectWidth = 250;       // size of the rectangle buttons
   int rectHeight = 90;   
   int inputs;
-  int hold;  
-  int pHWdith = 60;
-  int phHeight = 26;
-  boolean pHS;
+  int hold;
   boolean filled;
   boolean hasChosen;
   boolean choseDefault;
@@ -22,9 +18,11 @@ import static javax.swing.JOptionPane.*;
   boolean option1;
   boolean option2;
   boolean start;
-  PImage bg;
+   PImage bg;
+   //PImage darkbg;
   //slides and text fields stuff
   ControlP5 cp5;
+  //Slider pHSlider;
   //Aquarium stuff
   float pH; //healthy is 8.0 - 8.4
   int fishPop;
@@ -34,6 +32,8 @@ import static javax.swing.JOptionPane.*;
   int liva = 10; //0 - 10 livability, everything dies at 0
   int counter = 0;
   int livaCounter = 0;
+  int bgCounter = 0;
+  int iterations = 0;
   
   public void setup(){
   size(1000, 625);
@@ -44,8 +44,6 @@ import static javax.swing.JOptionPane.*;
   defaultY = height/2-rectHeight-10;
   createX = width/2-rectWidth/2;
   createY = height/2+10;
-  pHX = 500;
-  pHY = 0;
   lof = new ArrayList<Fish>();
   }
   
@@ -70,21 +68,10 @@ import static javax.swing.JOptionPane.*;
         rect(0,0, 1000, 25);
         fill(0);
         textSize(15);
-        text("Fish Population: " + fishPop, 100, 20);
+        text("Fish Population: " + fishPop, 10, 20);
         textSize(15);
-        text("pH level: " + pH, 600, 20);
-        rect(pHX, pHY, pHWdith, phHeight);
-        fill(15);
-        textSize(15);
-        text("choose the pH level", 400, 20);
-        if (pHS){
-        final String it = showInputDialog("Please enter a number from 0 to 10");
-        try{
-          pH = Integer.parseInt(it);
-        }         
-        catch(NumberFormatException e){}
-        pHS = false;
-        }
+        text("pH level: " + pH, 200, 20);
+
       }
       if (option2 && (!start)){
         fill (255); 
@@ -94,18 +81,6 @@ import static javax.swing.JOptionPane.*;
         text("Fish Population: " + hold, 10, 20);
         textSize(15);
         text("pH level: " + pH, 200, 20);
-        rect(pHX, pHY, pHWdith, phHeight);
-        fill(10);
-        textSize(15);
-        text("choose the pH level", 600, 20);
-        if(pHS){
-        final String it = showInputDialog("Please enter a number from 0 to 10");
-        try{
-          pH = Integer.parseInt(it);
-        }  
-        catch(NumberFormatException e){}
-        pHS = false;  
-      }
         inputs -= 1;
         while(inputs > -1){
            addRandomFish(); 
@@ -124,6 +99,8 @@ import static javax.swing.JOptionPane.*;
           javax.swing.JOptionPane.showMessageDialog(null, "Enter a valid number please");
         }
         }
+        cp5.addSlider("pH").setPosition(350.0, 10.0).setMin(6.0).setMax(9.0);
+        text("pH level: " + pH, 200, 20);
         start = false;
       }
    }
@@ -142,30 +119,70 @@ import static javax.swing.JOptionPane.*;
     a.display();
     }
     if(hasChosen && option1){
-      if(counter == 10){
-      addRandomFish();
-      counter = 0;
+      /*
+        pHSlider = new Slider(cp5, "pH levels");
+        pHSlider.setPosition(350.0, 10.0);
+        pHSlider.setMin(6.0);
+        pHSlider.setMax(9.0);
+        pH = pHSlider.getValue();
+        */
+        determineLivability();
+        if(counter == 10){
+          addRandomFish();
+          counter = 0;
+          if(liva <= 10 && liva >= 5){ 
+          if(lof.size() > 0){
+            lof.remove(0);
+            fishPop--;
+          }
+        }
+        counter++;
+        }
+        /*
+        if(bgCounter == 100){
+          determineLivability();
+          bgCounter = 0;
+        }
+        bgCounter++;
+        if(iterations == 1){
+          if(liva <= 10 && liva >= 5){ 
+          if(lof.size() > 0){
+            lof.remove(0);
+            fishPop--;
+          }
+          iterations = 0;
+        }
+        }
+        if(iterations == 2){
+          if(liva > 10){
+          if(lof.size() > 0){
+            lof.remove(0);
+            fishPop--;
+          }
+          iterations = 0;
+        }
+        }
+        /*
+        if(livaCounter == liva){
+          if(lof.size() > 0){
+            lof.remove(0);
+            fishPop--;
+          }
+          livaCounter = 0;
+        }
+        livaCounter++;
+        */
+        
     }
-    counter++;
-    }
-     determineLivability();
-    if(livaCounter == liva){
-      if(lof.size() > 0){
-      lof.remove(0);
-      fishPop--;
-      }
-      livaCounter = 0;
-    }
-    livaCounter++;
-    liva = 12;
  }
  
  void determineLivability(){
+   liva = 15;
    if(fishPop > 20){
      liva--;
    }
    else if(fishPop > 40){
-     liva--;
+     liva-=6;
    }
    else if(fishPop > 60){
      liva--;
@@ -197,7 +214,7 @@ import static javax.swing.JOptionPane.*;
    }
    */
  }
- 
+
  void mousePressed() {
  if(hasChosen){
         lof.add(new Fish(mouseX, mouseY, 10.0 + (float)(Math.random()*45)));
@@ -227,13 +244,9 @@ import static javax.swing.JOptionPane.*;
    else if( overRect(createX, createY, rectWidth, rectHeight) ){
      choseCreate = true;
    }
-   else if( overRect(pHX, pHY, pHWdith, phHeight) ){
-     pHS = true;
-   }
    else{
      choseDefault = false;
      choseCreate = false;
-      pHS = false;
    }
  }
  
