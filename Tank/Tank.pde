@@ -86,7 +86,7 @@ import static javax.swing.JOptionPane.*;
         rect(0,0, 1000, 25);
         fill(0);
         textSize(15);
-        text("Fish Population: " + hold, 10, 20);
+        text("Fish Population: " + fishPop, 10, 20);
         textSize(15);
         text("pH level: " + pH, 600, 20);
         rect(pHX, pHY, pHWdith, phHeight);
