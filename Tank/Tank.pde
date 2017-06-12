@@ -6,10 +6,14 @@ import static javax.swing.JOptionPane.*;
    //buttons
   int defaultX, defaultY;      // Position of square button
   int createX, createY;
+  int pHX, pHY;
   int rectWidth = 250;       // size of the rectangle buttons
   int rectHeight = 90;   
   int inputs;
-  int hold;
+  int hold;  
+  int pHWdith = 60;
+  int phHeight = 26;
+  boolean pHS;
   boolean filled;
   boolean hasChosen;
   boolean choseDefault;
@@ -18,10 +22,9 @@ import static javax.swing.JOptionPane.*;
   boolean option1;
   boolean option2;
   boolean start;
-   PImage bg;
+  PImage bg;
   //slides and text fields stuff
   ControlP5 cp5;
-  Slider pHSlider;
   //Aquarium stuff
   float pH; //healthy is 8.0 - 8.4
   int fishPop;
@@ -41,11 +44,9 @@ import static javax.swing.JOptionPane.*;
   defaultY = height/2-rectHeight-10;
   createX = width/2-rectWidth/2;
   createY = height/2+10;
+  pHX = 500;
+  pHY = 0;
   lof = new ArrayList<Fish>();
-          pHSlider = new Slider(cp5, "pH levels");
-        pHSlider.setPosition(350.0, 10.0);
-        pHSlider.setMin(6.0);
-        pHSlider.setMax(9.0);
   }
   
  public void draw(){
@@ -69,10 +70,21 @@ import static javax.swing.JOptionPane.*;
         rect(0,0, 1000, 25);
         fill(0);
         textSize(15);
-        text("Fish Population: " + fishPop, 10, 20);
+        text("Fish Population: " + fishPop, 100, 20);
         textSize(15);
-        text("pH level: " + pH, 200, 20);
-
+        text("pH level: " + pH, 600, 20);
+        rect(pHX, pHY, pHWdith, phHeight);
+        fill(15);
+        textSize(15);
+        text("choose the pH level", 400, 20);
+        if (pHS){
+        final String it = showInputDialog("Please enter a number from 0 to 10");
+        try{
+          pH = Integer.parseInt(it);
+        }         
+        catch(NumberFormatException e){}
+        pHS = false;
+        }
       }
       if (option2 && (!start)){
         fill (255); 
@@ -82,6 +94,18 @@ import static javax.swing.JOptionPane.*;
         text("Fish Population: " + hold, 10, 20);
         textSize(15);
         text("pH level: " + pH, 200, 20);
+        rect(pHX, pHY, pHWdith, phHeight);
+        fill(10);
+        textSize(15);
+        text("choose the pH level", 600, 20);
+        if(pHS){
+        final String it = showInputDialog("Please enter a number from 0 to 10");
+        try{
+          pH = Integer.parseInt(it);
+        }  
+        catch(NumberFormatException e){}
+        pHS = false;  
+      }
         inputs -= 1;
         while(inputs > -1){
            addRandomFish(); 
@@ -100,11 +124,6 @@ import static javax.swing.JOptionPane.*;
           javax.swing.JOptionPane.showMessageDialog(null, "Enter a valid number please");
         }
         }
-        pHSlider = new Slider(cp5, "pH levels");
-        pHSlider.setPosition(350.0, 10.0);
-        pHSlider.setMin(6.0);
-        pHSlider.setMax(9.0);
-        pH = pHSlider.getValue();
         start = false;
       }
    }
@@ -123,12 +142,7 @@ import static javax.swing.JOptionPane.*;
     a.display();
     }
     if(hasChosen && option1){
-        pHSlider = new Slider(cp5, "pH levels");
-        pHSlider.setPosition(350.0, 10.0);
-        pHSlider.setMin(6.0);
-        pHSlider.setMax(9.0);
-        pH = pHSlider.getValue();
-            if(counter == 10){
+      if(counter == 10){
       addRandomFish();
       counter = 0;
     }
@@ -213,9 +227,13 @@ import static javax.swing.JOptionPane.*;
    else if( overRect(createX, createY, rectWidth, rectHeight) ){
      choseCreate = true;
    }
+   else if( overRect(pHX, pHY, pHWdith, phHeight) ){
+     pHS = true;
+   }
    else{
      choseDefault = false;
      choseCreate = false;
+      pHS = false;
    }
  }
  
