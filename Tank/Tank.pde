@@ -1,30 +1,52 @@
+import controlP5.*;
+import static javax.swing.JOptionPane.*;
+
+   
    //Thanks to button class in processing's library!!!
    //buttons
   int defaultX, defaultY;      // Position of square button
   int createX, createY;
+  int pHX, pHY;
   int rectWidth = 250;       // size of the rectangle buttons
   int rectHeight = 90;   
-  boolean hasChosen = false;
+  int inputs;
+  int hold;  
+  int pHWdith = 60;
+  int phHeight = 26;
+  boolean pHS;
+  boolean filled;
+  boolean hasChosen;
   boolean choseDefault;
   boolean choseCreate;
+  boolean infoBox;
   boolean option1;
   boolean option2;
+  boolean start;
+  PImage bg;
+  //slides and text fields stuff
+  ControlP5 cp5;
   //Aquarium stuff
   float pH; //healthy is 8.0 - 8.4
   int fishPop;
-  int plantPop;
-  int liva; //0 - 10 livability, everything dies at 0
   ArrayList<Fish> lof;
-  PImage bg;
+  float temp;
+  float sunlight;
+  int liva = 10; //0 - 10 livability, everything dies at 0
+  int counter = 0;
+  int livaCounter = 0;
   
   public void setup(){
   size(1000, 625);
   bg = loadImage("ocean.jpg"); 
+  cp5 = new ControlP5(this);
   //coordinates of the rectangle
   defaultX = width/2-rectWidth/2;
   defaultY = height/2-rectHeight-10;
   createX = width/2-rectWidth/2;
   createY = height/2+10;
+  pH = 8;
+  pHX = 500;
+  pHY = 0;
   lof = new ArrayList<Fish>();
   }
   
@@ -49,7 +71,61 @@
         rect(0,0, 1000, 25);
         fill(0);
         textSize(15);
-        text("Fish Population: " + fishPop, 10, 20);
+        text("Fish Population: " + fishPop, 100, 20);
+        textSize(15);
+        text("pH level: " + pH, 600, 20);
+        rect(pHX, pHY, pHWdith, phHeight);
+        fill(15);
+        textSize(15);
+        text("choose the pH level", 400, 20);
+        if (pHS){
+        final String it = showInputDialog("Please enter a number from 0 to 10");
+        try{
+          pH = Integer.parseInt(it);
+        }         
+        catch(NumberFormatException e){}
+        pHS = false;
+        }
+      }
+      if (option2 && (!start)){
+        fill (255); 
+        rect(0,0, 1000, 25);
+        fill(0);
+        textSize(15);
+        text("Fish Population: " + hold, 10, 20);
+        textSize(15);
+        text("pH level: " + pH, 200, 20);
+        rect(pHX, pHY, pHWdith, phHeight);
+        fill(10);
+        textSize(15);
+        text("choose the pH level", 600, 20);
+        if(pHS){
+        final String it = showInputDialog("Please enter a number from 0 to 10");
+        try{
+          pH = Integer.parseInt(it);
+        }  
+        catch(NumberFormatException e){}
+        pHS = false;  
+      }
+        inputs -= 1;
+        while(inputs > -1){
+           addRandomFish(); 
+           inputs--;
+         }
+      }
+      if(option2 && start){
+        inputs = 0;
+        while(inputs == 0){
+          final String id = showInputDialog("Please enter how much fish you want to start off with");          
+          try{
+          inputs = Integer.parseInt(id);
+          hold = inputs;
+          }
+        catch(NumberFormatException e){
+          javax.swing.JOptionPane.showMessageDialog(null, "Enter a valid number please");
+        }
+        }
+        start = false;
       }
    }
    for(Fish a : lof){
@@ -66,26 +142,81 @@
     }
     a.display();
     }
-    if(pH < 8 || pH > 8.4){
-      lof.remove(random(lof.size()));
-  }
+    if(hasChosen && option1){
+      if(counter == 10){
+      addRandomFish();
+      counter = 0;
+    }
+    counter++;
+    }
+     determineLivability();
+    if(livaCounter == liva){
+      if(lof.size() > 0){
+      lof.remove(0);
+      fishPop--;
+      }
+      livaCounter = 0;
+    }
+    livaCounter++;
+    liva = 12;
+ }
+ 
+ void determineLivability(){
+   if(fishPop > 20){
+     liva--;
+   }
+   else if(fishPop > 40){
+     liva--;
+   }
+   else if(fishPop > 60){
+     liva--;
+   }
+   else if(fishPop > 80){
+     liva--;
+   }
+   else if(fishPop > 100){
+     liva--;
+   }
+   else if(pH < 7.5 || pH > 8.4){
+     liva--;
+   }
+   else if(pH < 7.0 || pH > 8.9){
+     liva--;
+   }
+   /*
+   else if(temp < 72 || temp > 80){
+     liva--;
+   }
+   else if(temp < 70 || temp > 88){
+     liva--;
+   }
+   else if(sunlight < 75){
+     liva--;
+   }
+   else if(sunlight < 50){
+     liva--;
+   }
+   */
  }
  
  void mousePressed() {
-   if(hasChosen){
-      lof.add(new Fish(mouseX, mouseY, 10.0 + (float)(Math.random()*45)));
-      fishPop += 1;
-   }
+ if(hasChosen){
+        lof.add(new Fish(mouseX, mouseY, 10.0 + (float)(Math.random()*45)));
+        fishPop += 1;
+        hold += 1;
+     }
   else if (choseDefault) {
     option1 = true;
     hasChosen = true;
     for(int i = 0; i < 10; i++){
       addRandomFish();
     }
+    pH = 8.0;
   }
   else if(choseCreate){
     option2 = true;
     hasChosen = true;
+    start = true;
   }
 }
 
@@ -97,9 +228,17 @@
    else if( overRect(createX, createY, rectWidth, rectHeight) ){
      choseCreate = true;
    }
+   else if( overRect(pHX, pHY, pHWdith, phHeight) ){
+     pHS = true;
+   }
+   else{
+     choseDefault = false;
+     choseCreate = false;
+      pHS = false;
+   }
  }
  
- //determine if mouseClick is over a particular rectangle
+ //determine if mousePressed is over a particular rectangle
  boolean overRect(int x, int y, int width, int height)  {
   if (mouseX >= x && mouseX <= x+width && 
       mouseY >= y && mouseY <= y+height) {
@@ -113,23 +252,3 @@
    fishPop += 1;
    lof.add(new Fish((float)(Math.random()*1000), (float)(Math.random()*625), 10.0 + (float)(Math.random()*45) ));
  }
- 
- //better function
-   void addDefaultFish(){
-    fishPop = 15;
-    lof.add(new Fish(500, 500, 100));
-    lof.add(new Fish(150, 300, 15));
-    lof.add(new Fish(100, 10, 10));
-    lof.add(new Fish(20, 40, 40));
-    lof.add(new Fish(600, 400, 15));
-    lof.add(new Fish(600, 600, 5));
-    lof.add(new Fish(800, 500, 15));
-    lof.add(new Fish(100, 160, 30));
-    lof.add(new Fish(260, 640, 20));
-    lof.add(new Fish(120, 406, 5));
-    lof.add(new Fish(900, 200, 15));
-    lof.add(new Fish(890, 500, 25));
-    lof.add(new Fish(900, 460, 20));
-    lof.add(new Fish(60, 340, 7));
-    lof.add(new Fish(920, 106, 50));
-  }
