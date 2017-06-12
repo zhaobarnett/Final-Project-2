@@ -30,7 +30,7 @@ import static javax.swing.JOptionPane.*;
   float pH; //healthy is 8.0 - 8.4
   int fishPop;
   ArrayList<Fish> lof;
-  float temp;
+  float temperature;
   float sunlight;
   int liva = 10; //0 - 10 livability, everything dies at 0
   int counter = 0;
@@ -78,8 +78,6 @@ import static javax.swing.JOptionPane.*;
         text("pH level: " + pH, 600, 20);
         rect(pHX, pHY, pHWdith, phHeight);
         fill(15);
-        textSize(15);
-        text("choose the pH level:", 350, 20);
       }
       if (option2 && (!start)){
         fill (255); 
@@ -98,6 +96,11 @@ import static javax.swing.JOptionPane.*;
            addRandomFish(); 
            inputs--;
         }
+        /*
+        fill(0);
+        textSize(15);
+        text("temperature: " + temperature, 160, 20);
+        */
       }
       if(option2 && start){
         inputs = 0;
@@ -111,6 +114,7 @@ import static javax.swing.JOptionPane.*;
           javax.swing.JOptionPane.showMessageDialog(null, "Enter a valid number please");
         }
         }
+        cp5.addSlider("temperature").setPosition(10, 35.0).setMin(60).setMax(90);
         start = false;
       }
       if (pHS){
@@ -199,13 +203,13 @@ import static javax.swing.JOptionPane.*;
       hold--;
    }
    }
+   else if(temperature < 72 || temperature > 80){
+     liva--;
+   }
+   else if(temperature < 70 || temperature > 88){
+     liva--;
+   }
    /*
-   else if(temp < 72 || temp > 80){
-     liva--;
-   }
-   else if(temp < 70 || temp > 88){
-     liva--;
-   }
    else if(sunlight < 75){
      liva--;
    }
