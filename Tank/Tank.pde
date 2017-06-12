@@ -22,6 +22,7 @@ import static javax.swing.JOptionPane.*;
   boolean option1;
   boolean option2;
   boolean start;
+  boolean editPh;
   PImage bg;
   //slides and text fields stuff
   ControlP5 cp5;
@@ -45,6 +46,7 @@ import static javax.swing.JOptionPane.*;
   createX = width/2-rectWidth/2;
   createY = height/2+10;
   pH = 8;
+  pHS = false;
   pHX = 500;
   pHY = 0;
   lof = new ArrayList<Fish>();
@@ -79,12 +81,12 @@ import static javax.swing.JOptionPane.*;
         textSize(15);
         text("choose the pH level", 400, 20);
         if (pHS){
+        pHS = false;
         final String it = showInputDialog("Please enter a number from 0 to 10");
         try{
           pH = Integer.parseInt(it);
         }         
-        catch(NumberFormatException e){}
-        pHS = false;
+        catch(NumberFormatException e){};
         }
       }
       if (option2 && (!start)){
@@ -100,12 +102,12 @@ import static javax.swing.JOptionPane.*;
         textSize(15);
         text("choose the pH level", 600, 20);
         if(pHS){
+        pHS = false;
         final String it = showInputDialog("Please enter a number from 0 to 10");
         try{
           pH = Integer.parseInt(it);
         }  
-        catch(NumberFormatException e){}
-        pHS = false;  
+        catch(NumberFormatException e){};
       }
         inputs -= 1;
         while(inputs > -1){
@@ -206,17 +208,18 @@ import static javax.swing.JOptionPane.*;
         hold += 1;
      }
   else if (choseDefault) {
+    pH = 8.0;
     option1 = true;
     hasChosen = true;
     for(int i = 0; i < 10; i++){
       addRandomFish();
     }
-    pH = 8.0;
   }
   else if(choseCreate){
     option2 = true;
     hasChosen = true;
     start = true;
+    pH = 8.0;
   }
 }
 
@@ -224,17 +227,21 @@ import static javax.swing.JOptionPane.*;
  void update() {
    if ( overRect(defaultX, defaultY, rectWidth, rectHeight) ) {
     choseDefault = true;
+    pHS = false;
    }
    else if( overRect(createX, createY, rectWidth, rectHeight) ){
      choseCreate = true;
+     pHS = false;
    }
    else if( overRect(pHX, pHY, pHWdith, phHeight) ){
-     pHS = true;
+     if(mousePressed){
+       pHS = true;
+     }
    }
    else{
      choseDefault = false;
      choseCreate = false;
-      pHS = false;
+     pHS = false;
    }
  }
  
