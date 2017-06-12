@@ -79,7 +79,7 @@ import static javax.swing.JOptionPane.*;
         rect(pHX, pHY, pHWdith, phHeight);
         fill(15);
         textSize(15);
-        text("choose the pH level", 400, 20);
+        text("choose the pH level:", 350, 20);
       }
       if (option2 && (!start)){
         fill (255); 
@@ -88,11 +88,11 @@ import static javax.swing.JOptionPane.*;
         textSize(15);
         text("Fish Population: " + hold, 10, 20);
         textSize(15);
-        text("pH level: " + pH, 200, 20);
+        text("pH level: " + pH, 600, 20);
         rect(pHX, pHY, pHWdith, phHeight);
-        fill(10);
+        fill(15);
         textSize(15);
-        text("choose the pH level", 400, 20);
+        text("choose the pH level:", 350, 20);
         inputs -= 1;
         while(inputs > -1){
            addRandomFish(); 
@@ -118,6 +118,7 @@ import static javax.swing.JOptionPane.*;
         final String it = showInputDialog("Please enter a number from 0 to 10");
         try{
           pH = Integer.parseInt(it);
+          pHS = false;
         }         
         catch(NumberFormatException e){};
       }
@@ -178,6 +179,12 @@ import static javax.swing.JOptionPane.*;
    else if(pH < 7.0 || pH > 8.9){
      liva--;
    }
+   else if(pH < 6.0 || pH > 9.9){
+     liva--;
+   }
+   else if(pH < 3.0){
+     liva--;
+   }
    /*
    else if(temp < 72 || temp > 80){
      liva--;
@@ -204,6 +211,7 @@ import static javax.swing.JOptionPane.*;
     pH = 8.0;
     option1 = true;
     hasChosen = true;
+    pHS = false;
     for(int i = 0; i < 10; i++){
       addRandomFish();
     }
@@ -251,5 +259,6 @@ import static javax.swing.JOptionPane.*;
  
  void addRandomFish(){
    fishPop += 1;
+   hold += 1;
    lof.add(new Fish((float)(Math.random()*1000), (float)(Math.random()*625), 10.0 + (float)(Math.random()*45) ));
  }
